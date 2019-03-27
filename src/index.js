@@ -8,7 +8,11 @@ import "./index.css";
 import App from "./components/App";
 import Signin from "./components/Auth/Signin";
 import Signup from "./components/Auth/Signup";
-
+import WithSession from "./components/WithSeassion";
+import Navbar from "./components/Navbar";
+import Search from "./components/Recipe/Search";
+import AddRecipe from "./components/Recipe/AddRecipe";
+import Profile from "./components/Profile/Profile";
 const client = new ApolloClient({
   uri: "http://localhost:4000/graphql",
   fetchOptions: {
@@ -29,18 +33,24 @@ const client = new ApolloClient({
   }
 });
 
-const Root = () => (
-  <Switch>
-    <Route exact path="/" component={App} />
-    <Route path="/signin" component={Signin} />
-    <Route path="/signup" component={Signup} />
-  </Switch>
+const Root = ({ refetch, session }) => (
+  <>
+    <Navbar session={session} />
+    <Switch>
+      <Route exact path="/" component={App} />
+      <Route exact path="/search" component={Search} />
+      <Route path="/signin" render={() => <Signin refetch={refetch} />} />
+      <Route path="/signup" render={() => <Signup refetch={refetch} />} />
+      <Route path="/recipe/add" component={AddRecipe} />
+      <Route path="/profile" component={Profile} />
+    </Switch>
+  </>
 );
-
+const RootWithSession = WithSession(Root);
 ReactDOM.render(
   <ApolloProvider client={client}>
     <BrowserRouter>
-      <Root />
+      <RootWithSession />
     </BrowserRouter>
   </ApolloProvider>,
   document.getElementById("root")
