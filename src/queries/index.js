@@ -25,6 +25,38 @@ export const GET_RECIPE = gql`
   }
 `;
 /** Recipes mutaions */
+export const ADD_RECIPE = gql`
+  mutation(
+    $name: String!
+    $category: String!
+    $description: String!
+    $instructions: String!
+    $username: String
+  ) {
+    addRecipe(
+      name: $name
+      category: $category
+      description: $description
+      instructions: $instructions
+      username: $username
+    ) {
+      name
+      category
+      description
+      instructions
+      username
+    }
+  }
+`;
+export const SEARCH_RECIPES = gql`
+  query($searchTerm: String) {
+    searchRecipes(searchTerm: $searchTerm) {
+      _id
+      name
+      likes
+    }
+  }
+`;
 /** user queries */
 export const GET_CURRENT_USER = gql`
   query {

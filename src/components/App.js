@@ -15,9 +15,10 @@ class App extends Component {
             console.log(data);
             return (
               <ul>
-                {data.getAllRecipes.map(recipe => (
-                  <RecipeItem {...recipe} key={recipe._id} />
-                ))}
+                {data.getAllRecipes &&
+                  data.getAllRecipes.map(recipe => (
+                    <RecipeItem {...recipe} key={recipe._id} />
+                  ))}
               </ul>
             );
           }}
